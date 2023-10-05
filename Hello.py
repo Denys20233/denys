@@ -45,7 +45,7 @@ def python(selected_project):
         st.write(f"111111111")
         st.write(f"111111111")
         st.write(f"111111111")
-        st.image("/workspaces/denys/images/graph11.png", output_format="auto")
+        st.image("images/graph11.png", output_format="auto")
 
     elif selected_project == 'Проект 2':
         st.write(f"2222222222")
