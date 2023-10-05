@@ -1,20 +1,6 @@
 import streamlit as st
 import pandas as pd
 
-background_color = "#001F3F"  # Ваш колір фону
-
-# Встановлення стилів
-st.markdown(
-    f"""
-    <style>
-        body {{
-            background-color: {background_color};
-            color: white;
-        }}
-    </style>
-    """,
-    unsafe_allow_html=True
-)
 
 
 def postgre_sql(selected_project):
@@ -58,18 +44,18 @@ def python(selected_project):
     if selected_project == 'Jupyter notebook 1':
         st.write(f"111111111")
 
-        path = r"C:\Users\Acer\Desktop\University\Курс2 семестр1\Програмування\Visualization\Global YouTube Statistics.csv"
+        # path = r"C:\Users\Acer\Desktop\University\Курс2 семестр1\Програмування\Visualization\Global YouTube Statistics.csv"
 
-        dataset = pd.read_csv(path, encoding='iso-8859-1')
-        st.dataframe(dataset)
+        # dataset = pd.read_csv(path, encoding='iso-8859-1')
+        # st.dataframe(dataset)
 
         st.write(f"111111111")
 
-        st.image("graph1.jpg", output_format="auto")
-        st.image("graph12.jpg", output_format="auto")
-        st.image("graph13.jpg", output_format="auto")
-        st.image("graph14.jpg", output_format="auto")
-        st.image("Знімок екрана 2023-10-02 201020.png", output_format="auto")
+        st.image("/workspaces/denys/images/graph11.png", output_format="auto")
+        # st.image("graph12.jpg", output_format="auto")
+        # st.image("graph13.jpg", output_format="auto")
+        # st.image("graph14.jpg", output_format="auto")
+        # st.image("Знімок екрана 2023-10-02 201020.png", output_format="auto")
 
     elif selected_project == 'Проект 2':
         st.write(f"2222222222")
