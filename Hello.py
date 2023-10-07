@@ -672,12 +672,18 @@ def visualization(selected_project):
         st.write("12")
         st.write("13")
         st.write("14")
+        st.write("15")
 
-        image_url = "https://github.com/Denys20233/denys/blob/main/images/Looker.jpg"
+        # image_url = "https://github.com/Denys20233/denys/blob/main/images/Looker.jpg"
+
+        # # Відображення зображення
+        # st.image(image_url, caption="Looker Image", use_column_width=True)
+        
+        image_url = "https://raw.githubusercontent.com/Denys20233/denys/main/images/Looker.jpg"
 
         # Відображення зображення
         st.image(image_url, caption="Looker Image", use_column_width=True)
-        
+
         
         
         
