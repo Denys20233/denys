@@ -670,8 +670,8 @@ def visualization(selected_project):
         st.write("")
 
         st.write("12")
-
-        image_path = "images/Looker 2.png"
+        st.write("13")
+        image_path = "/workspaces/denys/images/looker 2.png"
 
         
         image1 = Image.open(image_path)
