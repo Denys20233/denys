@@ -677,10 +677,10 @@ def visualization(selected_project):
         st.image("images/graph11.png", output_format="auto")
         # st.image("images/google sheets 6 (1) (1).jpg", use_column_width=True)
 
-        screenshot_path = "/workspaces/denys/images/google sheets 6 (1) (1).jpg"
+        screenshot_path = r"/workspaces/denys/images/google sheets 6 (1) (1).jpg"
 
         try:
-            st.write("3")
+            st.write("4")
             st.image(screenshot_path, use_column_width=True)
         except Exception as e:
             # Виведення повідомлення про помилку, якщо не вдалося відобразити зображення
