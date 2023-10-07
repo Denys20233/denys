@@ -674,7 +674,9 @@ def visualization(selected_project):
         st.write("")
         st.write("")
 
-        st.image("images/google sheets 6 (1) (1).jpg", output_format="auto")
+        st.image("images/graph11.png", output_format="auto")
+
+        # st.image("images/google sheets 6 (1) (1).jpg", output_format="auto")
         st.image("images/google sheets 6 (1) (1).jpg", use_column_width=True)
 
         screenshot_path1 = "images/google sheets 14.jpg"
