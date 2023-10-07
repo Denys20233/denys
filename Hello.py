@@ -670,9 +670,19 @@ def visualization(selected_project):
         st.write("")
         
         # st.image("images/Looker 2.png", output_format="auto")
-        image1 = Image.open("images/Looker 2.png")
-        image1.show()
+        # image1 = Image.open("images/Looker 2.png")
+        # image1.show()
+
         st.write("12")
+
+        try:
+          image1 = Image.open("images/Looker 2.png")
+          image1.show()
+        except FileNotFoundError as e:
+            print("File not found. Details:", e)
+
+          
+        
         
 
 
