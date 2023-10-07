@@ -668,26 +668,15 @@ def visualization(selected_project):
         st.write("Додав до звіта фільтри за назвою кампаній та за датою показу реклами.")
 
         st.write("")
-        
-        # st.image("images/Looker 2.png", output_format="auto")
-        # image1 = Image.open("images/Looker 2.png")
-        # image1.show()
 
         st.write("12")
 
-        # try:
-        #   image1 = Image.open("images/Looker 2.png")
-        #   image1.show()
-        # except FileNotFoundError as e:
-        #     print("File not found. Details:", e)
-
         image_path = "images/Looker 2.png"
 
-        try:
-            image1 = Image.open(image_path)
-            st.image(image1, caption="Looker 2 Image", use_column_width=True)
-        except FileNotFoundError as e:
-            st.error("File not found. Details: {}".format(e))
+        
+        image1 = Image.open(image_path)
+        st.image(image1, caption="Looker 2 Image", use_column_width=True)
+        
         
         
 
