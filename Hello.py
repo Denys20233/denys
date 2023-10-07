@@ -669,21 +669,25 @@ def visualization(selected_project):
 
         st.write("")
 
-        st.write("12")
-        st.write("13")
-        st.write("14")
-        st.write("15")
+        st.write("1")
+        st.write("")
+        st.write("")
+        st.write("")
 
-        # image_url = "https://github.com/Denys20233/denys/blob/main/images/Looker.jpg"
+        screenshot_path1 = "images/google sheets 14.jpg"
 
-        # # Відображення зображення
-        # st.image(image_url, caption="Looker Image", use_column_width=True)
-        
-        image_url = "https://raw.githubusercontent.com/Denys20233/denys/main/images/Looker.jpg"
+        # Вставка HTML-коду для зображення
+        html_code1 = f'<img src="file://{screenshot_path1}" alt="Опис скріншоту">'
 
-        # Відображення зображення
-        st.image(image_url, caption="Looker Image", use_column_width=True)
+        # Відображення HTML за допомогою st.markdown()
+        st.markdown(html_code1, unsafe_allow_html=True)
 
+        screenshot_path2 = "/workspaces/denys/images/google sheets 7.jpg"
+        # Вставка HTML-коду для зображення
+        html_code2 = f'<img src="file://{screenshot_path2}" alt="Опис скріншоту">'
+
+        # Відображення HTML за допомогою st.markdown()
+        st.markdown(html_code2, unsafe_allow_html=True)
         
         
         
