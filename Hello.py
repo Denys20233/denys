@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-
+from PIL import Image
 
 
 def sql(selected_project):
@@ -668,7 +668,9 @@ def visualization(selected_project):
         st.write("Додав до звіта фільтри за назвою кампаній та за датою показу реклами.")
 
         st.write("")
-        st.image("images/Looker.jpg", output_format="auto")
+        image1 = Image.open("images/Looker.jpg")
+        st.image(image1, use_column_width=True)
+        # st.image("images/Looker.jpg", output_format="auto")
 
 
     elif selected_project == 'Amplitude':
