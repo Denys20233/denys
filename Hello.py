@@ -2,13 +2,22 @@ import streamlit as st
 import pandas as pd
 from PIL import Image
 
-# hide_st_style = """
-# <style>
-# footer {visibility: hidden;}
-# </style>
-# """
+st.set_page_config(
+    page_title="Portfolio",
+    page_icon="🚀",
+    layout="wide",
+    initial_sidebar_state="expanded",
+    # theme="dark",  # Встановіть темний режим
+)
 
-# st.markdown(hide_st_style, unsafe_allow_html=True)
+
+hide_st_style = """
+<style>
+footer {visibility: hidden;}
+</style>
+"""
+
+st.markdown(hide_st_style, unsafe_allow_html=True)
 
 
 def sql(selected_project):
