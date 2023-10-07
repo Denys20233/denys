@@ -671,11 +671,13 @@ def visualization(selected_project):
 
         st.write("12")
         st.write("13")
-        image_path = "/workspaces/denys/images/looker 2.png"
+        st.write("14")
 
+        image_url = "https://github.com/Denys20233/denys/blob/main/images/Looker.jpg"
+
+        # Відображення зображення
+        st.image(image_url, caption="Looker Image", use_column_width=True)
         
-        image1 = Image.open(image_path)
-        st.image(image1, caption="Looker 2 Image", use_column_width=True)
         
         
         
