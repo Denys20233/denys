@@ -2,14 +2,13 @@ import streamlit as st
 import pandas as pd
 from PIL import Image
 
-hide_st_style = """
-<style>
-#MainMenu {visibility: hidden;}
-footer {visibility: hidden;}
-</style>
-"""
+# hide_st_style = """
+# <style>
+# footer {visibility: hidden;}
+# </style>
+# """
 
-st.markdown(hide_st_style, unsafe_allow_html=True)
+# st.markdown(hide_st_style, unsafe_allow_html=True)
 
 
 def sql(selected_project):
@@ -681,43 +680,10 @@ def visualization(selected_project):
         st.write("1")
         st.write("2")
         st.write("3")
-        st.write("")
+        st.write("234")
 
-
-
-
-        st.image("images/graph11.png", output_format="auto")
-        # st.image("images/google sheets 6 (1) (1).jpg", use_column_width=True)
-
-        screenshot_path = "images/11.png"
-
-        try:
-            st.write("6")
-            st.image(screenshot_path, use_column_width=True)
-        except Exception as e:
-            # Виведення повідомлення про помилку, якщо не вдалося відобразити зображення
-            st.error(f"An error occurred: {e}")
-
-        # screenshot_path1 = "images/google sheets 14.jpg"
-
-        # # Вставка HTML-коду для зображення
-        # html_code1 = f'<img src="file://{screenshot_path1}" alt="Опис скріншоту">'
-
-        # # Відображення HTML за допомогою st.markdown()
-        # st.markdown(html_code1, unsafe_allow_html=True)
-
-        # screenshot_path2 = "/workspaces/denys/images/google sheets 7.jpg"
-        # # Вставка HTML-коду для зображення
-        # html_code2 = f'<img src="file://{screenshot_path2}" alt="Опис скріншоту">'
-
-        # # Відображення HTML за допомогою st.markdown()
-        # st.markdown(html_code2, unsafe_allow_html=True)
-        
-        # image_path = "шлях_до_вашого_зображення.jpg"
-
-        # # Виведення зображення з автоматичною шириною колонки
-        # st.image(image_path, caption="Опис зображення", use_column_width=True)
-        
+        image = Image.open('./images/11.png')
+        st.image(image)
 
 
     elif selected_project == 'Amplitude':
