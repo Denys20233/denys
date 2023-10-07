@@ -626,13 +626,195 @@ def python(selected_project):
 def visualization(selected_project):
 
     if selected_project == 'Tableau':
-        st.subheader(f"Tableau 1")
-        st.write(f"1")
+        st.markdown("## [Tableau - 1](https://public.tableau.com/app/profile/.12596403/viz/Homework_6-2/Homework22)")
+        st.write("")
+        st.write("У цьому проекті я використав такий датасет:")
         
+        df1 = pd.read_csv("csv_files/saas_revenue.csv")
+        st.dataframe(df1)
+
+        st.write("")
+        st.write("У воркбуці Tableau створив обчислювані поля для таких метрик:")
+
+        sentences_t1 = [
+        "Total Revenue",
+        "Paid Users count",
+        "Average Revenue Per Paid Users"
+        ]
+
+        form_text_t1 = "<div>" + "</div><div>".join([f"• {sentence}" for sentence in sentences_t1]) + "</div>"
+        st.markdown(form_text_t1, unsafe_allow_html=True)
+
+        st.write("")
+
+        st.write("Після цього створив наступні діаграми:")
+
+        sentences_t2 = [
+        "Діаграма, що дозволяє візуально порівняти загальне Revenue для кожної з комбінацій локація + продукт.",
+        "Діаграма, що дозволяє порівняти загальне Revenue по кожній з локацій.",
+        "Діаграма, на якій вказано загальне Revenue по місяцях з розбивкою за продуктом.",
+        "Діаграма, що показує ARPPU та Paid Users Сount помісячно.",
+        "Box plot для порівняння сум транзакцій.",
+        "діаграму, що показує як змінюється частка кожної локації в Revenue з часом."
+        ]
+
+        form_text_t2 = "<div>" + "</div><div>".join([f"• {sentence}" for sentence in sentences_t2]) + "</div>"
+        st.markdown(form_text_t2, unsafe_allow_html=True)
+
+        st.write("")
+        st.write("Створив дашборд з головними графіками, на мою думку. Додав фільтри з локацією, продуктом та датою.")
+
+        st.write("")
+        st.image("images/tableau1.jpg", output_format="auto")
+        st.write("")
+
+
+        st.markdown("## [Tableau - 2](https://public.tableau.com/app/profile/.12596403/viz/Homework_6-3/Dashboard12)")
+        st.write("")
+        st.write("У цьому проекті я використав такий датасет:")
+        
+        df2 = pd.read_csv("csv_files/games_activity_combined.csv")
+        st.dataframe(df2)
+
+        st.write("")
+        st.write("В новому воркбуці створив три аркуші:")
+        st.write("Аркуш 1. З розбивкою помісячно вивів дві метрики:")
+
+        sentences_t3 = [
+        "Загальна кількість користувачів ігор.",
+        "Відсоток від загальної кількості користувачів, що проводили будь-яку кількість часу в активностях, повїязаних з “Battle pass”."
+        ]
+
+        form_text_t3 = "<div>" + "</div><div>".join([f"• {sentence}" for sentence in sentences_t3]) + "</div>"
+        st.markdown(form_text_t3, unsafe_allow_html=True)
+
+        st.write("")
+
+        st.write("Аркуш 2. З розбивкою помісячно вивів середній на гравця час, проведений у грі.")
+
+        sentences_t4 = [
+        "До аркуша додав Label з середньою на гравця кількістю годин та хвилин, проведених у грі.",
+        "Зробив Label текстовим полем і відобразив час у форматі “кількість годин: кількість хвилин”“HH:MM”"
+        ]
+
+        form_text_t4 = "<div>" + "</div><div>".join([f"• {sentence}" for sentence in sentences_t4]) + "</div>"
+        st.markdown(form_text_t4, unsafe_allow_html=True)
+
+        st.write("Аркуш 3. Створив теплову карту з даними про середню кількість часу проведеного в грі за вимірами:")
+
+        sentences_t5 = [
+        "Вікова групою гравців з кроком в 5 років. ",
+        "Квартал дати активності"
+        ]
+
+        form_text_t5 = "<div>" + "</div><div>".join([f"• {sentence}" for sentence in sentences_t5]) + "</div>"
+        st.markdown(form_text_t5, unsafe_allow_html=True)
+
+        st.write("Зібрав всі три аркуша в одному дашборді та додав фільтри:")
+
+        sentences_t6 = [
+        "Дата активності",
+        "Вікова група",
+        "Назва гри",
+        "Мова девайсу користувача"
+        ]
+
+        form_text_t6 = "<div>" + "</div><div>".join([f"• {sentence}" for sentence in sentences_t6]) + "</div>"
+        st.markdown(form_text_t6, unsafe_allow_html=True)
+
+        st.write("")
+        st.image("images/tableau2.jpg", output_format="auto")
+        st.write("")
+
+        st.markdown("## [Tableau - 3](https://public.tableau.com/app/profile/.12596403/viz/Homework3bonus_16947992656080/Dashboard1)")
+        st.write("")
+        st.write("У цьому проекті я використав інший датасет")
+
+        st.write("")
+        st.write("В новому воркбуці створив три аркуші:")
+        st.write("")
+        st.write("Аркуш 1. Середня кількість днів, що йдуть на доставку замовлення для кожного типу доставки (Ship mode)")
+        st.write("Аркуш 2. Кількість замовлень в розбивці за кількістю днів на доставку. Наприклад, доставлено за 0 днів - X замовлень, доставлено за 1 день - Y замовлень")
+        st.write("Аркуш 3. Середня кількість днів, що йдуть на доставку замовлення в кожному штаті в США, з візуалізацією на мапі і використанням градієнту.")
+        st.write("")
+        st.write("Зібрав три аркуша в одному дашборді та додав фільтри:")
+
+        sentences_t7 = [
+        "Дата замовлення",
+        "Сегмент",
+        "Тип доставки"
+        ]
+
+        form_text_t7 = "<div>" + "</div><div>".join([f"• {sentence}" for sentence in sentences_t7]) + "</div>"
+        st.markdown(form_text_t7, unsafe_allow_html=True)
+
+        st.write("")
+        st.image("images/tableau3.jpg", output_format="auto")
+        st.write("")
+
+
+        st.markdown("## [Tableau - 4](https://public.tableau.com/app/profile/.12596403/viz/Homework4_16948736309800/Cohortanalysis)")
+        st.write("")
+        st.write("У цьому проекті я використав минулий датасет з Tableau - 1")
+
+        st.write("")
+        st.write("Аркуш 1. New MRR - сума revenue, що була отримана від нових користувачів протягом того календарного місяця, коли вони стали платними.")
+        st.write("Аркуш 2. Total Revenue на одній вертикальній осі та зміна Total Revenue у відсотках відносно попереднього місяця на другій осі.")
+        st.write("Аркуш 3. Таблиця для когортного аналізу Revenue від користувачів:")
+        sentences_t8 = [
+        "В рядках перший місяць, коли користувач став платним.",
+        "В стовпчиках - кількість місяців, що пройшла від першого місяця оплати (тобто від місяця у відповідному рядку).",
+        "В таблиці виводяться значення Total Revenue у відповідний період для відповідної когорти.",
+        "Таблиця залита градієнтом за показником співвідношення суми Revenue у відповідній клітині до суми Revenue в перший місяць когорти."
+        ]
+
+        form_text_t8 = "<div>" + "</div><div>".join([f"• {sentence}" for sentence in sentences_t8]) + "</div>"
+        st.markdown(form_text_t8, unsafe_allow_html=True)
+
+        st.write("")
+        st.write("Зібрав три аркуша в одному дашборді та додав до дашборду фільтри за локацією та датою.")
+
+        st.write("")
+        st.image("images/tableau4.jpg", output_format="auto")
+        st.write("")
+
+        st.markdown("## [Tableau - 5](https://public.tableau.com/app/profile/.12596403/viz/Homework5_16953255791190/Dashboard1_1)")
+        st.write("")
+        st.write("У цьому проекті я використав такий датасет")
+
+        df3 = pd.read_csv("csv_files/onboarding_funnel_product.csv")
+        st.dataframe(df3)
+        st.write("")
+        st.write("Використовуючи дані з файлу, створив дашборд з такими складовими:")
+        st.write("1. Три окремих блока з числами:")
+
+        sentences_t9 = [
+        "Кількість зареєстрованих користувачів",
+        "кількість користувачів, що почали trial перiод",
+        "кількість користувачів, що оплатили."
+        ]
+
+        form_text_t9 = "<div>" + "</div><div>".join([f"• {sentence}" for sentence in sentences_t9]) + "</div>"
+        st.markdown(form_text_t9, unsafe_allow_html=True)
+
+        st.write("")
+        st.write("2. Графік з кількістю реєстрацій та конверсією з реєстрації в trial в кожному місяці реєстрації.")
+        st.write("3. Графік з середньою кількістю днів від реєстрації до оплати в кожному місяці реєстрації.")
+        st.write("4. Діаграму у вигляді воронки, що відображає проходження користувачами кроків з файла.")
+        st.write("5. Додав інтерактив до дашборду за допомогою Actions та Parameters. Коли користувач дашборда клікає по певному блоку з цифрами - графік перебудовується")
+
+        st.write("")
+        st.image("images/tableau5.jpg", output_format="auto")
+        st.write("")
+        
+
+
+
+
 
     elif selected_project == 'Power BI':
         st.subheader(f"Power BI")
-        st.write(f"2")
+        st.write("In progress...")
 
 
     elif selected_project == 'Looker studio':
@@ -676,17 +858,69 @@ def visualization(selected_project):
         st.write("Додав до звіта фільтри за назвою кампаній та за датою показу реклами.")
 
         st.write("")
-
-        st.write("1")
-        st.image("images/looker 2.png", output_format="auto")
+        st.image("images/Looker1.png", output_format="auto")
 
 
     elif selected_project == 'Amplitude':
         st.subheader(f"Amplitude")
-        st.write(f"4")
+        st.write("")
+        st.write("У Demo Amplitude обрав проєкт Media Streaming - Analytics та створив когорту, що задана наступними параметрами:")
 
+        sentences_a1 = [
+        "Країна: США",
+        "Платформа: iOS або Android",
+        "Користувачі, що вперше виконали дію Welcome протягом червня 2023"
+        ]
 
+        form_text_a1 = "<div>" + "</div><div>".join([f"• {sentence}" for sentence in sentences_a1]) + "</div>"
+        st.markdown(form_text_a1, unsafe_allow_html=True)
 
+        st.write("")
+        st.image("images/amp0.jpg", output_format="auto")
+        st.write("")
+        
+        st.write("На основі цієї когорти створив наступні візуалізації:")
+        st.write("1. Воронка онбордингу користувача у послідовності Welcome - User Sign Up - Main Landing Screen - Search Song or Video - Play Song or Video, розбита за платформою")
+
+        st.write("")
+        st.image("images/Amp1.jpg", output_format="auto")
+        st.write("")
+
+        st.write("2. Конверсія у проходження воронки онбордингу поденно, розбита за платформою")
+
+        st.write("")
+        st.image("images/Amp2.jpg", output_format="auto")
+        st.write("")
+
+        st.write("3. Час, за який користувач проходить онбординг поденно, розбитий за платформою")
+
+        st.write("")
+        st.image("images/Amp3.jpg", output_format="auto")
+        st.write("")
+
+        st.write("4. Динаміка кількості користувачів, що виконують Play Song or Video та користувачів, що виконують будь-який активний івент поденно")
+
+        st.write("")
+        st.image("images/Amp4.jpg", output_format="auto")
+        st.write("")
+
+        st.write("5. Середня кількість івентів на користувача поденно: будь-який активний івент та Play Song or Video")
+
+        st.write("")
+        st.image("images/Amp5.jpg", output_format="auto")
+        st.write("")
+
+        st.write("6. Графік Retention користувачів з івенту Welcome в будь-який активний івент та Play Song or Video у вигляді стовпчикової діаграми")
+
+        st.write("")
+        st.image("images/Amp6.jpg", output_format="auto")
+        st.write("")
+
+        st.write("7. Створив Journey Map користувача від старту сесії до Play Song or Video.")
+
+        st.write("")
+        st.image("images/Amplitude_+.jpg", output_format="auto")
+        st.write("")
 
 def google_sheets(selected_project):
     
