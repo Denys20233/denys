@@ -678,12 +678,7 @@ def visualization(selected_project):
         st.write("")
 
         st.write("1")
-        st.write("2")
-        st.write("3")
-        st.write("234")
-
-        image = Image.open('images/11.png')
-        st.image(image, "rb")
+        st.image("images/looker 2.png", output_format="auto")
 
 
     elif selected_project == 'Amplitude':
@@ -990,6 +985,6 @@ elif selected_section == 'Visualization':
 
 
 elif selected_section == 'Google Sheets':
-    selected_project = st.sidebar.selectbox("Оберіть проект:", ['Проект 1', 'Проект 2', 'Проект 3'])
+    selected_project = st.sidebar.selectbox("Оберіть проект:", ['Проект 1', 'Проект 2'])
     if selected_project:
         google_sheets(selected_project)
