@@ -671,7 +671,7 @@ def visualization(selected_project):
         
         # st.image("images/Looker 2.png", output_format="auto")
         image1 = Image.open("images/Looker 2.png")
-        image1.show
+        image1.show()
         st.write("12")
         
 
