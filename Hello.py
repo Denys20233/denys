@@ -682,8 +682,8 @@ def visualization(selected_project):
         st.write("3")
         st.write("234")
 
-        image = Image.open('./images/11.png')
-        st.image(image)
+        image = Image.open('images/11.png')
+        st.image(image, "rb")
 
 
     elif selected_project == 'Amplitude':
