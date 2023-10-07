@@ -671,33 +671,40 @@ def visualization(selected_project):
 
         st.write("1")
         st.write("2")
-        st.write("")
+        st.write("3")
         st.write("")
 
         st.image("images/graph11.png", output_format="auto")
+        # st.image("images/google sheets 6 (1) (1).jpg", use_column_width=True)
 
-        # st.image("images/google sheets 6 (1) (1).jpg", output_format="auto")
-        st.image("images/google sheets 6 (1) (1).jpg", use_column_width=True)
+        screenshot_path = "images/google sheets 6 (1) (1).jpg"
 
-        screenshot_path1 = "images/google sheets 14.jpg"
+        try:
+            st.write("2")
+            st.image(screenshot_path, use_column_width=True)
+        except Exception as e:
+            # Виведення повідомлення про помилку, якщо не вдалося відобразити зображення
+            st.error(f"An error occurred: {e}")
 
-        # Вставка HTML-коду для зображення
-        html_code1 = f'<img src="file://{screenshot_path1}" alt="Опис скріншоту">'
+        # screenshot_path1 = "images/google sheets 14.jpg"
 
-        # Відображення HTML за допомогою st.markdown()
-        st.markdown(html_code1, unsafe_allow_html=True)
+        # # Вставка HTML-коду для зображення
+        # html_code1 = f'<img src="file://{screenshot_path1}" alt="Опис скріншоту">'
 
-        screenshot_path2 = "/workspaces/denys/images/google sheets 7.jpg"
-        # Вставка HTML-коду для зображення
-        html_code2 = f'<img src="file://{screenshot_path2}" alt="Опис скріншоту">'
+        # # Відображення HTML за допомогою st.markdown()
+        # st.markdown(html_code1, unsafe_allow_html=True)
 
-        # Відображення HTML за допомогою st.markdown()
-        st.markdown(html_code2, unsafe_allow_html=True)
+        # screenshot_path2 = "/workspaces/denys/images/google sheets 7.jpg"
+        # # Вставка HTML-коду для зображення
+        # html_code2 = f'<img src="file://{screenshot_path2}" alt="Опис скріншоту">'
+
+        # # Відображення HTML за допомогою st.markdown()
+        # st.markdown(html_code2, unsafe_allow_html=True)
         
-        image_path = "шлях_до_вашого_зображення.jpg"
+        # image_path = "шлях_до_вашого_зображення.jpg"
 
-        # Виведення зображення з автоматичною шириною колонки
-        st.image(image_path, caption="Опис зображення", use_column_width=True)
+        # # Виведення зображення з автоматичною шириною колонки
+        # st.image(image_path, caption="Опис зображення", use_column_width=True)
         
 
 
