@@ -669,9 +669,11 @@ def visualization(selected_project):
 
         st.write("")
         
-        st.image("images/Looker 2.png", output_format="auto")
-        # image1 = Image.open("//workspaces//denys//images//Looker.jpg")
-        # st.image(image1, use_column_width=True)
+        # st.image("images/Looker 2.png", output_format="auto")
+        image1 = Image.open("images/Looker 2.png")
+        image1.show
+        st.write("12")
+        
 
 
     elif selected_project == 'Amplitude':
