@@ -604,7 +604,7 @@ def python(selected_project):
         st.write(f"111111111")
         st.write(f"2")
         st.image("images/graph11.png", output_format="auto")
-        st.image("images/graph11.png", output_format="auto")
+        
        
 
     elif selected_project == 'Проект 2':
@@ -670,9 +670,12 @@ def visualization(selected_project):
         st.write("")
 
         st.write("1")
+        st.write("2")
         st.write("")
         st.write("")
-        st.write("")
+
+        st.image("images/google sheets 6 (1) (1).jpg", output_format="auto")
+        st.image("images/google sheets 6 (1) (1).jpg", use_column_width=True)
 
         screenshot_path1 = "images/google sheets 14.jpg"
 
@@ -689,7 +692,10 @@ def visualization(selected_project):
         # Відображення HTML за допомогою st.markdown()
         st.markdown(html_code2, unsafe_allow_html=True)
         
-        
+        image_path = "шлях_до_вашого_зображення.jpg"
+
+        # Виведення зображення з автоматичною шириною колонки
+        st.image(image_path, caption="Опис зображення", use_column_width=True)
         
 
 
