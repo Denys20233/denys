@@ -668,9 +668,10 @@ def visualization(selected_project):
         st.write("Додав до звіта фільтри за назвою кампаній та за датою показу реклами.")
 
         st.write("")
-        image1 = Image.open(r"images/Looker.jpg")
+        
+        st.image("images/Looker.jpg")
+        image1 = Image.open("//workspaces//denys//images//Looker.jpg")
         st.image(image1, use_column_width=True)
-        st.image("/workspaces/denys/images/Looker.jpg", output_format="auto")
 
 
     elif selected_project == 'Amplitude':
