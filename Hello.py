@@ -2,6 +2,15 @@ import streamlit as st
 import pandas as pd
 from PIL import Image
 
+hide_st_style = """
+<style>
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+</style>
+"""
+
+st.markdown(hide_st_style, unsafe_allow_html=True)
+
 
 def sql(selected_project):
     # st.subheader(f"{selected_project}")
@@ -673,6 +682,9 @@ def visualization(selected_project):
         st.write("2")
         st.write("3")
         st.write("")
+
+
+
 
         st.image("images/graph11.png", output_format="auto")
         # st.image("images/google sheets 6 (1) (1).jpg", use_column_width=True)
