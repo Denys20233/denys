@@ -1,13 +1,17 @@
 import streamlit as st
 import pandas as pd
 from PIL import Image
+import matplotlib.pyplot as plt
+from matplotlib.ticker import FuncFormatter
+import folium
+from streamlit_folium import folium_static
 
 st.set_page_config(
     page_title="Portfolio",
     page_icon="🚀",
     layout="wide",
     initial_sidebar_state="expanded",
-    # theme="dark",  # Встановіть темний режим
+    # theme="dark"
 )
 
 
@@ -612,25 +616,441 @@ group by session_table.page_path
 
 
 def python(selected_project):
-    st.subheader(f"Python - {selected_project}")
+
+    if selected_project == 'Analysis of YouTube':
+        st.subheader(f"Python: Analysis of YouTube")
+        st.write("")
+        st.write("Я провів аналіз каналів на YouTube з використанням мови програмування Python. У цьому проекті я використовував Jupyter Notebook та бібліотеки, такі як Pandas, Matplotlib.pyplot, FuncFormatter, NumPy та Folium. Мій датасет доступний нижче:")
+
+        dfp1 = pd.read_csv("csv_files/Global YouTube Statistics.csv", encoding='latin-1')
+        st.dataframe(dfp1)
+
+        st.write("")
+        st.write("")
+        st.subheader(f"1. На цьому графіку я вивів топ 10 ютуб каналів за кількістю підписників")
+        # st.write("1. На цьому графіку я вивів топ 10 ютуб каналів за кількістю підписників")
+        st.image("images/chart1.png", width=900, output_format="auto")
+        st.write("У результаті ми бачимо, що найбільше підписників на каналі T-series. Для створення цього графіку я використав такий код:")
+        st.write("")
+        code_py1 = """
+        df_sorted = df.sort_values(by='subscribers', ascending=False)
+top_10 = df_sorted.head(10)
+
+plt.figure(figsize=(10, 6))
+bars = plt.bar(top_10['Youtuber'], top_10['subscribers'], color='navy')
+plt.xlabel('Youtuber')
+plt.ylabel('Subscribers')
+plt.title(f'Top 10 YouTube channels by subscribers')
+plt.xticks(rotation=90, ha='right')
+plt.gca().yaxis.set_major_formatter(FuncFormatter(lambda x, _: f'{x / 1e6:.0f}M'))
+
+for bar in bars:
+    yval = bar.get_height()
+    plt.text(bar.get_x() + bar.get_width()/2, yval, f'{yval / 1e6:.0f}M', ha='center', va='bottom')
+    
+plt.tight_layout()
+        """
+        st.code(code_py1, language='python')
 
 
+        st.write("")
+        st.write("")
+        st.subheader(f"2. На цьому графіку ми бачимо кількість каналів у яких підписників більше 10 М по кожній країні")
+        st.image("images/chart3.png", width=900, output_format="auto")
+        st.write("У результаті ми бачимо, що найбільше таких каналів у США та Індії. Для створення цього графіку я використав такий код:")
+        st.write("")
+        code_py2 = """
+        data_10m = df[df['subscribers'] > 1e7]
 
-    if selected_project == 'Jupyter notebook 1':
-        st.write(f"111111111")
-        st.write(f"111111111")
-        st.write(f"111111111")
-        st.write(f"2")
-        st.image("images/graph11.png", output_format="auto")
+channels_by_country = data_10m['Country'].value_counts().sort_index()
+
+plt.figure(figsize=(12, 6))
+plt.plot(channels_by_country.index, channels_by_country.values, marker='o', linestyle='--', color='navy')
+
+plt.xlabel('Country')
+plt.ylabel('Number of Channels')
+plt.title('Number of Channels with > 10 M Subscribers by Country')
+
+plt.grid(True)
+
+plt.xticks(rotation=90, ha='right')
+
+plt.tight_layout()
+        """
+        st.code(code_py2, language='python')
+
+
+        st.write("")
+        st.write("")
+        st.subheader(f"3. На цьому графіку ми бачимо топ 10 каналів за кількістю переглядів")
+        st.image("images/chart2.png", width=900, output_format="auto")
+        st.write("У результаті ми бачимо, що найбільше переглядів у каналі T-series. Для створення цього графіку я використав такий код:")
+        st.write("")
+        code_py3 = """
+        sorted_df1 = df.sort_values(by='video views', ascending=False)
+top_10_views = sorted_df1.head(10)
+
+plt.figure(figsize=(10, 6))
+bars = plt.bar(top_10_views['Youtuber'], top_10_views['video views'], color='navy')
+
+plt.xlabel('Youtuber')
+plt.ylabel('Video Views')
+plt.title('Top 10 YouTube Channels by Video Views')
+
+plt.gca().yaxis.set_major_formatter(FuncFormatter(lambda x, _: f'{x / 1e9:.0f}B'))
+
+for bar in bars:
+    yval = bar.get_height()
+    plt.text(bar.get_x() + bar.get_width()/2, yval, f'{yval / 1e9:.0f}B', ha='center', va='bottom')
+
+plt.xticks(rotation=90, ha='right')
+plt.tight_layout()
+        """
+        st.code(code_py3, language='python')
+
+
+        st.write("")
+        st.write("")
+        st.subheader(f"4. На цьому графіку ми бачимо співвідношення кількості підписників до кількості переглядів")
+        st.image("images/chart4.png", width=900, output_format="auto")
+        st.write("Якби це не було очевидним, але при меншій кількості переглядів - менша кількість підписників. Для створення цього графіку я використав такий код:")
+        st.write("")
+        code_py4 = """
+        x_column = 'subscribers'
+y_column = 'video views'
+
+
+plt.figure(figsize=(10, 6))
+plt.scatter(df[x_column], df[y_column], alpha=0.5, color='blue')
+
+plt.gca().yaxis.set_major_formatter(FuncFormatter(lambda x, _: f'{x / 1e9:.0f}B'))
+plt.gca().xaxis.set_major_formatter(FuncFormatter(lambda x, _: f'{x / 1e6:.0f}M'))
+
+plt.xlabel(x_column)
+plt.ylabel(y_column)
+plt.title(f'{x_column} vs {y_column}')
+        """
+        st.code(code_py4, language='python')
+
+
+        st.write("")
+        st.write("")
+        st.subheader(f"5. На цьому графіку ми бачимо кількість каналів по кожній категорії")
+        st.image("images/chart5.png", width=900, output_format="auto")
+        st.write("Тут ми бачимо, що найбільша кількість каналів у яких багато підписників є в категорії Music та Entertainment. Для створення цього графіку я використав такий код:")
+        st.write("")
+        code_py5 = """
+        x_column = 'subscribers'
+y_column = 'video views'
+
+
+plt.figure(figsize=(10, 6))
+plt.scatter(df[x_column], df[y_column], alpha=0.5, color='blue')
+
+plt.gca().yaxis.set_major_formatter(FuncFormatter(lambda x, _: f'{x / 1e9:.0f}B'))
+plt.gca().xaxis.set_major_formatter(FuncFormatter(lambda x, _: f'{x / 1e6:.0f}M'))
+
+plt.xlabel(x_column)
+plt.ylabel(y_column)
+plt.title(f'{x_column} vs {y_column}')
+        """
+        st.code(code_py5, language='python')
+
+
+        st.write("")
+        st.write("")
+        st.subheader(f"6. На цій карті ми можемо побачити найбільші каналі по країнам")
+
+        data1 = dfp1[dfp1['subscribers'] > 1e7]
+        data1 = data1.dropna(subset=['Latitude', 'Longitude'])
+
+        # Створення мапи Folium
+        map = folium.Map(location=[data1['Latitude'].mean(), data1['Longitude'].mean()], zoom_start=2)
+
+        max_subscribers = data1.loc[data1.groupby('Country')['subscribers'].idxmax()]
+
+        for index, row in max_subscribers.iterrows():
+            folium.Marker(location=[row['Latitude'], row['Longitude']],
+                          popup=f"{row['Youtuber']} - {row['subscribers']} subscribers - {row['Country']}",
+                          icon=folium.Icon(color='darkblue')).add_to(map)
+
+        # Вставка мапи у Streamlit
+        folium_static(map, width=1100)
+
+        st.write("Наприклад, в Україні найбільший канал це Slivki Show. Для створення цього графіку я використав такий код:")
+        st.write("")
+        code_py6 = """
+        import folium
+
+data1 = df[df['subscribers'] > 1e7]
+data1 = data1.dropna(subset=['Latitude', 'Longitude']) # прибираєм nan
+
+map = folium.Map(location=[data1['Latitude'].mean(), data1['Longitude'].mean()], zoom_start=2)
+
+max_subscribers = data1.loc[data1.groupby('Country')['subscribers'].idxmax()]
+
+for index, row in max_subscribers.iterrows():
+    folium.Marker(location=[row['Latitude'], row['Longitude']],
+                  popup=f"{row['Youtuber']} - {row['subscribers']} subscribers - {row['Country']}",
+                  icon=folium.Icon(color='darkblue')).add_to(map)
+
+map
+        """
+        st.code(code_py6, language='python')
+
         
-       
+    elif selected_project == 'creation and analysis of dataset':
+        st.subheader(f"Python: creation and analysis of dataset")
+        st.write("")
+        st.write("У рамках цього проекту я створив власний датасет, використовуючи інформацію про топ-1000 світових компаній та наповнив його різноманітною інформацією з різних джерел. Після цього я провів аналіз цього датасету, досліджуючи його ключові аспекти.")
+        st.write("")
+        st.write("Спочатку я взяв основний датасет, прибрав зайві символи та створив 4 стовпчики з показниками:")
+        st.write("")
+        code_py7 = """
+        import pandas as pd
+        df = pd.read_csv(r"мій шлях.csv")
 
-    elif selected_project == 'Проект 2':
-        st.write(f"2222222222")
+        df = df.rename(columns=lambda x: x.strip())
+
+        def convert_to_numeric(value):
+    try:
+        return pd.to_numeric(value.replace('$', '').replace(',', '').replace('%', '').replace('(', '').replace(')', ''), errors='coerce')
+    except ValueError:
+        return np.nan
+
+# Застосування функції до відповідних стовпців
+df['revenues'] = df['revenues'].apply(convert_to_numeric)
+df['profits'] = df['profits'].apply(convert_to_numeric)
+df['revenue_percent_change'] = df['revenue_percent_change'].apply(convert_to_numeric)
+df['profits_percent_change'] = df['profits_percent_change'].apply(convert_to_numeric)
+df['assets'] = df['assets'].apply(convert_to_numeric)
+df['market_value'] = df['market_value'].apply(convert_to_numeric)
+df['employees'] = df['employees'].apply(convert_to_numeric)
+
+df = df.drop("change_in_rank", axis=1)
+
+df['Average Revenue per Employee'] = df['revenues'] / df['employees'] # Середній дохід на одного працівника
+df['Profit Margin'] = df['profits'] / df['revenues']  #  Маржа прибутку
+df['Relative Change in Profits'] = df['profits_percent_change'] / 100  #  Відносна зміна прибутку
+df['Asset Turnover'] = df['revenues'] / df['assets']  #  Оборот активі
+        """
+        st.code(code_py7, language='python')
+
+        st.write("")
+        st.write("Далі додаємо нові дані та зводимо стовпчики, по яким будемо з'єднувати до спільного регістра:")
+        st.write("")
+        code_py8 = """
+        df1 = pd.read_csv(r"мій шлях")
+df2 = pd.read_csv(r"мій шлях.csv")
+
+df1['Name'] = df1['Name'].str.lower()
+df2['Name'] = df2['Name'].str.lower()
+merged_df1 = pd.merge(df1, df2[['Name', 'marketcap', 'country']], on='Name', how='left')
+        """
+        st.code(code_py8, language='python')
+
+        st.write("")
+        st.write("Додаємо ще декілька стопців з різних джерел та прибираємо рядки для яких не знайшлись спільні значення")
+        st.write("")
+        code_py9 = """
+        df3 = pd.read_csv(r"мій шлях")
+        df3['Name'] = df3['Name'].str.lower()
+        merged_df2 = pd.merge(merged_df1, df3[['Name', 'cost_to_borrow']], on='Name', how='left')
+
+        df4 = pd.read_csv(r"мій шлях.csv")
+
+        df4['Name'] = df3['Name'].str.lower()
+        merged_df3 = pd.merge(merged_df2, df4[['Name', 'total_debt']], on='Name', how='left')
+
+        filtered_df_result = merged_df3[(merged_df3['country'].notna())]
+        """
+
+        st.code(code_py9, language='python')
+
+
+        st.write("")
+        st.write("Частина створення датасету була завершина, далі переходимо до аналізу")
+        dfp2 = pd.read_csv("csv_files/result.csv", encoding='latin-1')
+        st.dataframe(dfp2)
+        st.write("")
+
+
+
+        st.subheader("1. На цьому графіку ми можемо побачити топ 10 компаній за кількістю співробітників")
+        st.write("")
+
+        st.image("images/chart6.png", width=900, output_format="auto")
+        st.write("")
+
+        code_py10 = """
+        import matplotlib.pyplot as plt
+        from matplotlib.ticker import FuncFormatter
+
+        df_sorted1 = filtered_df_result.sort_values(by='employees', ascending=False)
+top_10_1 = df_sorted1.head(10)
+
+plt.figure(figsize=(10, 6))
+plt.bar(top_10_1['Name'], top_10_1['employees'], color='navy')
+plt.xlabel('Company')
+plt.ylabel('Employee')
+plt.title(f'Top 10 company of employees')
+plt.xticks(rotation=45, ha='right')
+plt.gca().yaxis.set_major_formatter(FuncFormatter(lambda x, _: f'{x / 1e6:.1f}M'))
+plt.tight_layout()
+        """
+
+        st.code(code_py10, language='python')
+
+        st.subheader("2. На цьому графіку ми бачимо топ 10 компаній за найбільшим боргом")
+        st.write("")
+
+        st.image("images/chart7.png", width=900, output_format="auto")
+        st.write("")
+
+        code_py11 = """
+        df_sorted2 = filtered_df_result.sort_values(by='total_debt', ascending=False)
+top_10_2 = df_sorted2.head(10)
+
+plt.figure(figsize=(10, 6))
+plt.bar(top_10_2['Name'], top_10_2['total_debt'], color='navy')
+plt.xlabel('Company')
+plt.ylabel('Total debt')
+plt.title(f'Top 10 company of total debts')
+plt.xticks(rotation=45, ha='right')
+plt.gca().yaxis.set_major_formatter(FuncFormatter(lambda x, _: f'{x / 1e9:.0f}B'))
+plt.tight_layout()
+        """
+
+        st.code(code_py11, language='python')
+
+
+        st.subheader("3. На цьому графіку ми бачимо топ 10 компаній з найбільшими активами ")
+        st.write("")
+
+        st.image("images/chart8.png", width=900, output_format="auto")
+        st.write("")
+
+        code_py11 = """
+        df_sorted3 = filtered_df_result.sort_values(by='assets', ascending=False)
+top_10_3 = df_sorted3.head(10)
+
+plt.figure(figsize=(10, 6))
+plt.bar(top_10_3['Name'], top_10_3['assets'], color='navy')
+plt.xlabel('Company')
+plt.ylabel('Assets')
+plt.title(f'Top 10 company of assets')
+plt.xticks(rotation=60, ha='right')
+plt.gca().yaxis.set_major_formatter(FuncFormatter(lambda x, _: f'{x / 1e6:.1f}M'))
+plt.tight_layout()
+        """
+
+        st.code(code_py11, language='python')
+
+        st.subheader("4. На цьому графіку ми бачимо співвідношення кількості працівників до доходу")
+        st.write("")
+
+        st.image("images/chart9.png", width=900, output_format="auto")
+        st.write("")
+
+        code_py11 = """
+        x_column = 'revenues'
+y_column = 'employees'
+
+
+plt.figure(figsize=(10, 6))
+plt.scatter(filtered_df_result[x_column], filtered_df_result[y_column], alpha=0.5, color='blue')
+
+plt.gca().yaxis.set_major_formatter(FuncFormatter(lambda x, _: f'{x / 1e6:.1f}M'))
+plt.gca().xaxis.set_major_formatter(FuncFormatter(lambda x, _: f'{x / 1e3:.0f}K'))
+
+plt.xlabel(x_column)
+plt.ylabel(y_column)
+plt.title(f'Scatter Plot: {x_column} vs {y_column}')
+        """
+
+        st.code(code_py11, language='python')
+
+
+        st.subheader("5. На цьому графіку ми бачимо кількість найбільших компаній по країнам")
+        st.write("")
+
+        st.image("images/chart10.png", width=900, output_format="auto")
+        st.write("")
+
+        code_py12 = """
+        companiesby_country = filtered_df_result['country'].value_counts()
+
+plt.figure(figsize=(10, 6))
+companiesby_country.plot(kind='line', marker='o')
+plt.title('Кількість компаній в кожній країні')
+plt.xlabel('Країна')
+plt.ylabel('Кількість компаній')
+        """
+
+        st.code(code_py12, language='python')
+
+
+        st.subheader("6. На цьому графіку ми бачимо найдорожчі компанії на ринку")
+        st.write("")
+
+        st.image("images/chart11.png", width=900, output_format="auto")
+        st.write("")
+
+        code_py13 = """
+        plt.figure(figsize=(10, 6))
+plt.bar(top_10_4['Name'], top_10_4['market_value'], color='navy')
+plt.xlabel('Company')
+plt.ylabel('market_value')
+plt.title(f'Top 10 company of market_value')
+plt.xticks(rotation=60, ha='right')
+plt.gca().yaxis.set_major_formatter(FuncFormatter(lambda x, _: f'{x / 1e6:.1f}M'))
+plt.tight_layout()
+        """
+
+        st.code(code_py13, language='python')
 
 
     elif selected_project == 'Проект 3':
-        st.write(f"333333333333")
+        st.write("3333")
+        # import os
+
+        # def convert_file(input_type, output_type, file):
+        #     path = "uploads/"
+            
+        #     input_path = os.path.join(path, f"input_file.{input_type}")
+        #     output_path = os.path.join(path, f"output_file.{output_type}")
+
+        #     try:
+        #         with open(input_path, 'wb') as upload_file:
+        #             upload_file.write(file.getvalue())
+
+        #         if input_type == 'csv' and output_type == 'txt':
+        #             with open(input_path, 'r') as csv_file, open(output_path, 'w') as txt_file:
+        #                 for line in csv_file:
+        #                     txt_file.write(line)
+
+        #         # Додайте інші умови для решти ваших конвертацій
+
+        #         else:
+        #             st.warning("Ця конвертація не підтримується.")
+
+        #         st.success(f"Файл: input_file.{input_type} конвертовано до output_file.{output_type}")
+
+        #     except FileNotFoundError:
+        #         st.error(f"Помилка: Файл {input_path} не знайдено.")
+        #     except Exception as problem:
+        #         st.error(f"Помилка: {str(problem)}")
+
+        # # Загрузка файлів через Streamlit
+        # uploaded_file = st.file_uploader("Виберіть файл для конвертації", type=["csv", "txt", "dat"])
+        # if uploaded_file:
+        #     st.write("Ваш файл успішно завантажено!")
+
+        #     input_type = st.selectbox("Виберіть вхідний формат", ["csv", "txt", "dat"])
+        #     output_type = st.selectbox("Виберіть вихідний формат", ["csv", "txt", "dat"])
+
+        #     if st.button("Конвертувати"):
+        #         convert_file(input_type, output_type, uploaded_file)
 
 
 def visualization(selected_project):
@@ -1217,7 +1637,7 @@ if selected_section == 'SQL':
 
 
 elif selected_section == 'Python':
-    selected_project = st.sidebar.selectbox("Оберіть проект:", ['Jupyter notebook 1', 'Проект 2', 'Проект 3'])
+    selected_project = st.sidebar.selectbox("Оберіть проект:", ['Analysis of YouTube', 'creation and analysis of dataset', 'Проект 3'])
     if selected_project:
         python(selected_project)
 
