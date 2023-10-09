@@ -1,8 +1,8 @@
 import streamlit as st
 import pandas as pd
 from PIL import Image
-import matplotlib.pyplot as plt
-from matplotlib.ticker import FuncFormatter
+# import matplotlib.pyplot as plt
+# from matplotlib.ticker import FuncFormatter
 import folium
 from streamlit_folium import folium_static
 
@@ -17,7 +17,6 @@ st.set_page_config(
 
 hide_st_style = """
 <style>
-#MainMenu {visibility: hidden;}
 footer {visibility: hidden;}
 </style>
 """
