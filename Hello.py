@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from PIL import Image
+# from PIL import Image
 
 st.set_page_config(
     page_title="Portfolio",
