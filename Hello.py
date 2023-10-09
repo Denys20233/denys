@@ -1010,7 +1010,7 @@ plt.tight_layout()
 
 
     elif selected_project == 'Проект 3':
-        st.write("3333")
+        st.write("33333333")
         # import os
 
         # def convert_file(input_type, output_type, file):
