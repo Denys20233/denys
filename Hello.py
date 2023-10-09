@@ -1,7 +1,5 @@
 import streamlit as st
 import pandas as pd
-import folium
-from streamlit_folium import folium_static
 from PIL import Image
 
 st.set_page_config(
@@ -21,6 +19,8 @@ footer {visibility: hidden;}
 
 st.markdown(hide_st_style, unsafe_allow_html=True)
 
+import folium
+from streamlit_folium import folium_static
 
 def sql(selected_project):
     # st.subheader(f"{selected_project}")
