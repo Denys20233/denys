@@ -1,10 +1,8 @@
 import streamlit as st
 import pandas as pd
-from PIL import Image
-# import matplotlib.pyplot as plt
-# from matplotlib.ticker import FuncFormatter
 import folium
 from streamlit_folium import folium_static
+from PIL import Image
 
 st.set_page_config(
     page_title="Portfolio",
