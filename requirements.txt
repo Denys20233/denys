@@ -5,3 +5,4 @@ pydeck
 streamlit
 streamlit-folium
 folium
+plotly==5.3.1
