@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import plotly.express as px
 # from PIL import Image
 
 st.set_page_config(
@@ -8,6 +9,21 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
     # theme="dark"
+)
+
+st.markdown(
+    """
+    <style>
+        body {
+            color: #f8f9fa;
+            background-color: #343a40;
+        }
+        .css-1v3fvcr {
+            background-color: #343a40;
+        }
+    </style>
+    """,
+    unsafe_allow_html=True,
 )
 
 
@@ -19,8 +35,10 @@ footer {visibility: hidden;}
 
 st.markdown(hide_st_style, unsafe_allow_html=True)
 
+
 import folium
 from streamlit_folium import folium_static
+
 
 def sql(selected_project):
     # st.subheader(f"{selected_project}")
@@ -1008,46 +1026,373 @@ plt.tight_layout()
 
 
     elif selected_project == 'Проект 3':
-        st.write("3234nfujyu53пкеп25")
-        # import os
+        st.write("У цьому проекті я використав такий датасет, на основі якого створив інтерактивні графіки, які можна налаштовувати зліва")
+        from dateutil.relativedelta import relativedelta
 
-        # def convert_file(input_type, output_type, file):
-        #     path = "uploads/"
-            
-        #     input_path = os.path.join(path, f"input_file.{input_type}")
-        #     output_path = os.path.join(path, f"output_file.{output_type}")
 
-        #     try:
-        #         with open(input_path, 'wb') as upload_file:
-        #             upload_file.write(file.getvalue())
+        df = pd.read_csv("csv_files/games_activity_combined.csv")
+        st.dataframe(df)
+        df['activity_date'] = pd.to_datetime(df['activity_date'])
 
-        #         if input_type == 'csv' and output_type == 'txt':
-        #             with open(input_path, 'r') as csv_file, open(output_path, 'w') as txt_file:
-        #                 for line in csv_file:
-        #                     txt_file.write(line)
+        # Створюємо фільтри
+        game_filter = st.sidebar.selectbox("Виберіть гру", df["game_activity_name"].unique())
+        device_filter = st.sidebar.selectbox("Виберіть тип девайсу", ["Старий", "Новий"])
+        date_range = st.sidebar.date_input("Виберіть діапазон дат", [df["activity_date"].min(), df["activity_date"].max()])
+        date_range = [pd.to_datetime(date) for date in date_range]
+        age_range = st.sidebar.slider("Виберіть діапазон віку", int(df["age"].min()), int(df["age"].max()), (20, 60))
 
-        #         # Додайте інші умови для решти ваших конвертацій
+        # Фільтруємо дані за вибраними фільтрами
+        filtered_df = df[(df["game_activity_name"] == game_filter) &
+                        (df["has_older_device_model"] == (device_filter == "Старий")) &
+                        (df["activity_date"].between(date_range[0], date_range[1])) &
+                        (df["age"].between(age_range[0], age_range[1]))]
 
-        #         else:
-        #             st.warning("Ця конвертація не підтримується.")
+        
 
-        #         st.success(f"Файл: input_file.{input_type} конвертовано до output_file.{output_type}")
+        # Побудова лінійного графіка за активністю по днях
+        fig_line = px.line(filtered_df.groupby("activity_date").size().reset_index(name="Кількість користувачів"),
+                          x="activity_date", y="Кількість користувачів",
+                          title="Кількість активних користувачів по днях",
+                          labels={"activity_date": "Дата", "Кількість користувачів": "Кількість користувачів"})
+        st.plotly_chart(fig_line)
 
-        #     except FileNotFoundError:
-        #         st.error(f"Помилка: Файл {input_path} не знайдено.")
-        #     except Exception as problem:
-        #         st.error(f"Помилка: {str(problem)}")
 
-        # # Загрузка файлів через Streamlit
-        # uploaded_file = st.file_uploader("Виберіть файл для конвертації", type=["csv", "txt", "dat"])
-        # if uploaded_file:
-        #     st.write("Ваш файл успішно завантажено!")
+        # 1
+        fig_line_age_activity = px.line(filtered_df.groupby(["age", "game_activity_name"]).size().reset_index(name="Кількість користувачів"),
+                                x="age", y="Кількість користувачів",
+                                color="game_activity_name",
+                                title="Кількість користувачів за віком та грою",
+                                labels={"age": "Вік", "Кількість користувачів": "Кількість користувачів"})
+        st.plotly_chart(fig_line_age_activity)
 
-        #     input_type = st.selectbox("Виберіть вхідний формат", ["csv", "txt", "dat"])
-        #     output_type = st.selectbox("Виберіть вихідний формат", ["csv", "txt", "dat"])
+        # Побудова стовпчикового графіка за кількістю користувачів за мовою
+        fig_bar = px.bar(filtered_df.groupby("language").size().reset_index(name="Кількість користувачів"),
+                        x="language", y="Кількість користувачів",
+                        title="Кількість користувачів за мовою",
+                        labels={"language": "Мова", "Кількість користувачів": "Кількість користувачів"})
+        st.plotly_chart(fig_bar)
 
-        #     if st.button("Конвертувати"):
-        #         convert_file(input_type, output_type, uploaded_file)
+        fig_bar_age_game = px.bar(filtered_df.groupby(["age", "game_activity_name"]).size().reset_index(name="Кількість користувачів"),
+                    x="age", y="Кількість користувачів",
+                    color="game_activity_name",
+                    title="Кількість користувачів за віком та грою",
+                    labels={"age": "Вік", "Кількість користувачів": "Кількість користувачів"})
+        st.plotly_chart(fig_bar_age_game)
+
+        # 3
+        fig_pie_age = px.pie(filtered_df.groupby("age").size().reset_index(name="Кількість користувачів"),
+                            names="age", values="Кількість користувачів",
+                            title="Розподіл користувачів за віком",
+                            labels={"age": "Вік", "Кількість користувачів": "Кількість користувачів"})
+        st.plotly_chart(fig_pie_age)
+
+        
+        fig_scatter = px.scatter(filtered_df, x="age", y=filtered_df["total_seconds"] / 3600, color="game_activity_name",
+                                title="Взаємозв'язок віку та часу гри (в годинах)",
+                                labels={"age": "Вік", "total_seconds": "Час гри (в годинах)", "game_activity_name": "Гра"})
+        st.plotly_chart(fig_scatter)
+
+
+    elif selected_project == 'regular expressions':
+        import re
+
+        st.subheader("regular expressions")
+        
+        
+        def count_words(text):
+            word_count = len(re.findall(r'\b[a-zA-ZА-Яа-я]{2,}\b', text))
+            return word_count
+
+        def main():
+            st.subheader("Word Count App")
+
+            text0 = st.text_area("Введіть текст:", "")
+
+            if st.button("Підрахувати кількість слів"):
+  
+                word_count = count_words(text0)
+                st.success(f"Кількість слів у вашому тексті: {word_count}")
+
+        # Запуск веб-додатку
+        if __name__ == "__main__":
+            main()
+
+        st.write("Код цієї програми:")
+        code = """
+import re
+
+def count_words(text):
+    word_count = len(re.findall(r'\b[a-zA-ZА-Яа-я]{2,}\b', text))
+    return word_count
+
+def main():
+    st.title("Word Count App")
+
+    # Введення тексту користувачем
+    text0 = st.text_area("Введіть текст:", "")
+
+    # Кнопка для виклику функції підрахунку слів
+    if st.button("Підрахувати кількість слів"):
+        # Виклик функції та виведення результату
+        word_count = count_words(text0)
+        st.success(f"Кількість слів у вашому тексті: {word_count}")
+
+if __name__ == "__main__":
+    main()
+"""
+
+        # Відображення коду
+        st.code(code, language="python")
+
+        st.subheader("Пошук всіх електронних адрес в тексті")
+        code = """
+       
+pattern = r'[A-Za-z0-9._%-+]+@[A-Za-z-.]+\.[A-Za-z]+\b'
+
+list_email = (re.findall(pattern, my_text))
+
+for email in list_email:
+    print(email)
+"""
+
+        # Відображення коду
+        st.code(code, language="python")
+
+        st.subheader("Перевірка паролю не зважаючи на зайві символи та регістр")
+        code = """
+import re
+
+password_system = 'teST34-45'
+
+pattern = r'[^A-Za-z0-9-]+'
+
+
+while True:
+    password_user = re.sub(pattern, '', input('Введіть пароль з 9-ти символів:'))
+
+    if password_user.lower() == password_system.lower():
+        print("Пароль вірний")
+        break
+    else:
+        print("Пароль не вірний, спробуйте ще раз\n")
+"""
+
+        # Відображення коду
+        st.code(code, language="python")
+
+        st.subheader("Цей скрипт створює абревіатуру з перших букв кожного слова")
+        code = """
+import re
+pattern = r'\b[^0-9\W]'
+
+user_text = input('Введіть речення: ')
+
+word_list = ''.join(re.findall(pattern, user_text))
+print(word_list.upper())
+"""
+
+        # Відображення коду
+        st.code(code, language="python")
+
+        st.subheader("Видалення повторів")
+        code = """
+import re
+my_text = 'Дуже поширена помилка помилка - це лише повторення повторення слова слова.' \
+          ' Смішно, чи чи не так? Це - книга книгарні.'
+
+pattern = r'\b(\w+)\s+\1\b'
+
+new_text = re.sub(pattern, r'\1', my_text)
+print(my_text)
+print()
+print(new_text)
+"""
+
+        # Відображення коду
+        st.code(code, language="python")
+
+        st.subheader("Видалення зайвих пробілів та розміщення рядків з нового рядка")
+        code = """
+text = ""
+pattern = '([.;!?]+)'
+
+text_without_lines = re.sub(r'\s+', ' ', text)
+print(text_without_lines)
+
+print()
+
+result_text = re.sub(r'([.;!?]+\s)', r'\1\n', text_without_lines)
+print(result_text)
+"""
+
+        # Відображення коду
+        st.code(code, language="python")
+
+        st.subheader("Пошук всіх військових бригад з тексту")
+        code = """
+import re
+text = ""
+print(re.findall(r'[0-9]+(?:th|ed)\s\b[A-Z][A-Za-z]+\b', text))
+"""
+
+        # Відображення коду
+        st.code(code, language="python")
+
+        st.subheader("Пошук всіх дат з тексту")
+        code = """
+import re
+
+path = r"мій шлях.txt"
+
+
+with open(path, 'r') as file:
+    text = file.read()
+
+
+pattern = r'\d{4}'
+dates = re.findall(pattern, text)
+
+print('Результат:', dates)
++
+pattern = r'[A-Z][a-z]+\s\d{4}'
+dates = re.findall(pattern, text)
+
+print('Результат:', dates)
+
+pattern = r'\d{2}\s[A-Z][a-z]+\s\d{4}'
+dates = re.findall(pattern, text)
+
+print('Результат:', dates)
+"""
+
+        # Відображення коду
+        st.code(code, language="python")
+
+
+        st.subheader("Скрипт який шукає всі версії Python  у тексті")
+        code = """
+import re
+
+path = r"мій шлях.txt"
+
+
+with open(path, 'r') as file:
+    text = file.read()
+
+
+pattern = r'\bPython\s+(\d+\.\d+)\b'
+result = re.findall(pattern, text)
+
+print('Результат:', result)
+
+pattern = r'\bPython\s+(\d+\.\d+\.\d+)\b'
+result1 = re.findall(pattern, text)
+
+print('Результат:', result1)
+"""
+
+        # Відображення коду
+        st.code(code, language="python")
+
+        
+    elif selected_project == 'Проект 5':
+        
+      st.subheader("Проект 5")
+      st.write("У цьому проекті я використав такий датасет, на основі якого створив інтерактивні графіки, які можна налаштовувати зліва")
+        
+      df = pd.read_csv("csv_files/Adidas Vs Nike.csv")
+      st.dataframe(df)
+
+      with st.sidebar:
+          # Додаємо фільтри
+          price_range = st.slider('Діапазон цін', min_value=df['Sale Price'].min(), max_value=df['Sale Price'].max(), value=(df['Sale Price'].min(), df['Sale Price'].max()))
+          rating_range = st.slider('Діапазон рейтингу', min_value=0.0, max_value=5.0, value=(0.0, 5.0), step=0.1)
+          selected_models = st.multiselect('Оберіть моделі кросівок', df['Brand'].unique(), default=df['Brand'].unique())
+
+      # Фільтруємо дані
+      filtered_data = df[(df['Sale Price'].between(price_range[0], price_range[1])) & 
+                        (df['Rating'].between(rating_range[0], rating_range[1])) &
+                        (df['Brand'].isin(selected_models))]
+
+      # Тепер можна перейти до створення графіків
+      # Графік розсіювання
+      scatter_fig = px.scatter(filtered_data, x='Rating', y='Sale Price', color='Brand', title='Scatter Plot of Rating vs Sale Price')
+      st.plotly_chart(scatter_fig)
+
+      # Графік стовпчиковий
+      bar_fig = px.bar(filtered_data, x='Brand', y='Reviews', title='Bar Chart of Reviews by Brand')
+      st.plotly_chart(bar_fig)
+
+      # Графік кругової діаграми
+      pie_fig = px.pie(filtered_data, names='Brand', title='Brand Distribution')
+      st.plotly_chart(pie_fig)
+
+      # Графік стовпчиків продажів за моделями
+      sales_by_model = filtered_data.groupby('Brand')['Sale Price'].sum().reset_index()
+      bar_sales_fig = px.bar(sales_by_model, x='Brand', y='Sale Price', title='Total Sales by Brand')
+      bar_sales_fig.update_layout(xaxis_title='Brand', yaxis_title='Total Sales')
+      st.plotly_chart(bar_sales_fig)
+
+      bar_brand_sales_fig = px.bar(filtered_data.groupby('Brand')['Sale Price'].count().reset_index(), x='Brand', y='Sale Price', title='Number of Shoes Sold by Brand')
+      bar_brand_sales_fig.update_layout(xaxis_title='Brand', yaxis_title='Number of Shoes Sold')
+      st.plotly_chart(bar_brand_sales_fig)
+
+
+      line_fig = px.line(filtered_data.groupby('Product Name')['Sale Price'].mean().reset_index(), x='Product Name', y='Sale Price', title='Average Sale Price by Shoe Model')
+      line_fig.update_layout(xaxis_title='Shoe Model', yaxis_title='Average Sale Price')
+
+      # Налаштовуємо шрифт для назв моделей
+      line_fig.update_layout(
+          xaxis=dict(tickfont=dict(size=8)),
+          yaxis=dict(tickfont=dict(size=12))
+      )
+
+      # Збільшуємо графік у ширину
+      line_fig.update_layout(width=1000)
+
+      st.plotly_chart(line_fig)
+
+
+      # Створюємо другий графік
+      discount_fig = px.line(filtered_data.groupby('Product Name')['Discount'].mean().reset_index(), x='Product Name', y='Discount', title='Average Discount by Shoe Model')
+      discount_fig.update_layout(xaxis_title='Shoe Model', yaxis_title='Average Discount')
+
+      # Налаштовуємо шрифт для назв моделей
+      discount_fig.update_layout(
+          xaxis=dict(tickfont=dict(size=8)),
+          yaxis=dict(tickfont=dict(size=12))
+      )
+
+      # Збільшуємо графік у ширину
+      discount_fig.update_layout(width=1000)
+
+      st.plotly_chart(discount_fig)
+
+
+
+
+
+
+      
+        
+
+        
+
+
+
+
+
+       
+
+
+
+
+
+
+
+       
+
+        
 
 
 def visualization(selected_project):
@@ -1619,22 +1964,51 @@ def google_sheets(selected_project):
         st.write("")
         st.image("images/google sheets 15.jpg", output_format="auto")
 
+def about_me(selected_project):
+    
+    if selected_project == 'Resume':
+        st.subheader("About me")
+        st.image("images/Знімок екрана 2023-10-10 162023.png", output_format="auto")
+
+        contact_info = """
+        **Connect with me:**
+        - 067 689 32 68 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp; - [Telegram](https://t.me/your_telegram_link)
+        - dnpidgainiy2005@gmail.com &emsp;&emsp;&emsp;&emsp;&emsp; - [LinkedIn](https://www.linkedin.com/in/your_linkedin_profile)
+        """
+
+
+        st.markdown(contact_info, unsafe_allow_html=True)
+        
+
+        
+
+        
+
+
+
 st.title('Портфоліо')
 
 
-sections = ['SQL', 'Python', 'Visualization', 'Google Sheets']
+sections = ['About me', 'SQL', 'Python', 'Visualization', 'Google Sheets']
 selected_section = st.sidebar.selectbox("Оберіть розділ:", sections)
 
 
 # selected_project = None
-if selected_section == 'SQL':
+
+if selected_section == 'About me':
+    selected_project = st.sidebar.selectbox("Оберіть проект:", ['Resume'])
+    if selected_project:
+        about_me(selected_project)
+
+
+elif selected_section == 'SQL':
     selected_project = st.sidebar.selectbox("Оберіть проект:", ['PostgreSQL', 'Big Query'])
     if selected_project:
         sql(selected_project)
 
 
 elif selected_section == 'Python':
-    selected_project = st.sidebar.selectbox("Оберіть проект:", ['Analysis of YouTube', 'creation and analysis of dataset', 'Проект 3'])
+    selected_project = st.sidebar.selectbox("Оберіть проект:", ['Analysis of YouTube', 'creation and analysis of dataset', 'Проект 3', 'regular expressions', 'Проект 5'])
     if selected_project:
         python(selected_project)
 
