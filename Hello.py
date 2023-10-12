@@ -662,7 +662,7 @@ def python(selected_project):
         st.write("")
         st.subheader(f"1. На цьому графіку я вивів топ 10 ютуб каналів за кількістю підписників")
         # st.write("1. На цьому графіку я вивів топ 10 ютуб каналів за кількістю підписників")
-        st.image("images/chart1.png", width=900, output_format="auto")
+        st.image("images/chart1.png", output_format="auto")
         st.write("У результаті ми бачимо, що найбільше підписників на каналі T-series. Для створення цього графіку я використав такий код:")
         st.write("")
         code_py1 = """
