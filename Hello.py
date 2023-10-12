@@ -26,6 +26,24 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
+st.markdown(
+    """
+    <style>
+        @media only screen and (max-width: 600px) {
+            /* Тут ви можете встановити стилі для маленьких екранів */
+            body {
+                font-size: 14px; /* Наприклад, менший розмір шрифту */
+            }
+
+            .container {
+                /* Ваші стилі для маленьких екранів */
+            }
+        }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
 
 hide_st_style = """
 <style>
