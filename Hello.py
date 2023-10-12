@@ -689,7 +689,7 @@ plt.tight_layout()
         st.write("")
         st.write("")
         st.subheader(f"2. На цьому графіку ми бачимо кількість каналів у яких підписників більше 10 М по кожній країні")
-        st.image("images/chart3.png", width=900, output_format="auto")
+        st.image("images/chart3.png", output_format="auto")
         st.write("У результаті ми бачимо, що найбільше таких каналів у США та Індії. Для створення цього графіку я використав такий код:")
         st.write("")
         code_py2 = """
@@ -716,7 +716,7 @@ plt.tight_layout()
         st.write("")
         st.write("")
         st.subheader(f"3. На цьому графіку ми бачимо топ 10 каналів за кількістю переглядів")
-        st.image("images/chart2.png", width=900, output_format="auto")
+        st.image("images/chart2.png", output_format="auto")
         st.write("У результаті ми бачимо, що найбільше переглядів у каналі T-series. Для створення цього графіку я використав такий код:")
         st.write("")
         code_py3 = """
@@ -745,7 +745,7 @@ plt.tight_layout()
         st.write("")
         st.write("")
         st.subheader(f"4. На цьому графіку ми бачимо співвідношення кількості підписників до кількості переглядів")
-        st.image("images/chart4.png", width=900, output_format="auto")
+        st.image("images/chart4.png", output_format="auto")
         st.write("Якби це не було очевидним, але при меншій кількості переглядів - менша кількість підписників. Для створення цього графіку я використав такий код:")
         st.write("")
         code_py4 = """
@@ -769,7 +769,7 @@ plt.title(f'{x_column} vs {y_column}')
         st.write("")
         st.write("")
         st.subheader(f"5. На цьому графіку ми бачимо кількість каналів по кожній категорії")
-        st.image("images/chart5.png", width=900, output_format="auto")
+        st.image("images/chart5.png", output_format="auto")
         st.write("Тут ми бачимо, що найбільша кількість каналів у яких багато підписників є в категорії Music та Entertainment. Для створення цього графіку я використав такий код:")
         st.write("")
         code_py5 = """
@@ -808,7 +808,7 @@ plt.title(f'{x_column} vs {y_column}')
                           icon=folium.Icon(color='darkblue')).add_to(map)
 
         # Вставка мапи у Streamlit
-        folium_static(map, width=1100)
+        folium_static(map) 
 
         st.write("Наприклад, в Україні найбільший канал це Slivki Show. Для створення цього графіку я використав такий код:")
         st.write("")
@@ -912,7 +912,7 @@ merged_df1 = pd.merge(df1, df2[['Name', 'marketcap', 'country']], on='Name', how
         st.subheader("1. На цьому графіку ми можемо побачити топ 10 компаній за кількістю співробітників")
         st.write("")
 
-        st.image("images/chart6.png", width=900, output_format="auto")
+        st.image("images/chart6.png", output_format="auto")
         st.write("")
 
         code_py10 = """
@@ -937,7 +937,7 @@ plt.tight_layout()
         st.subheader("2. На цьому графіку ми бачимо топ 10 компаній за найбільшим боргом")
         st.write("")
 
-        st.image("images/chart7.png", width=900, output_format="auto")
+        st.image("images/chart7.png", output_format="auto")
         st.write("")
 
         code_py11 = """
@@ -960,7 +960,7 @@ plt.tight_layout()
         st.subheader("3. На цьому графіку ми бачимо топ 10 компаній з найбільшими активами ")
         st.write("")
 
-        st.image("images/chart8.png", width=900, output_format="auto")
+        st.image("images/chart8.png", output_format="auto")
         st.write("")
 
         code_py11 = """
@@ -982,7 +982,7 @@ plt.tight_layout()
         st.subheader("4. На цьому графіку ми бачимо співвідношення кількості працівників до доходу")
         st.write("")
 
-        st.image("images/chart9.png", width=900, output_format="auto")
+        st.image("images/chart9.png", output_format="auto")
         st.write("")
 
         code_py11 = """
@@ -1007,7 +1007,7 @@ plt.title(f'Scatter Plot: {x_column} vs {y_column}')
         st.subheader("5. На цьому графіку ми бачимо кількість найбільших компаній по країнам")
         st.write("")
 
-        st.image("images/chart10.png", width=900, output_format="auto")
+        st.image("images/chart10.png", output_format="auto")
         st.write("")
 
         code_py12 = """
@@ -1026,7 +1026,7 @@ plt.ylabel('Кількість компаній')
         st.subheader("6. На цьому графіку ми бачимо найдорожчі компанії на ринку")
         st.write("")
 
-        st.image("images/chart11.png", width=900, output_format="auto")
+        st.image("images/chart11.png", output_format="auto")
         st.write("")
 
         code_py13 = """
@@ -1074,6 +1074,11 @@ plt.tight_layout()
                           labels={"activity_date": "Дата", "Кількість користувачів": "Кількість користувачів"})
         st.plotly_chart(fig_line)
 
+       
+
+
+
+
 
         # 1
         fig_line_age_activity = px.line(filtered_df.groupby(["age", "game_activity_name"]).size().reset_index(name="Кількість користувачів"),
@@ -1082,6 +1087,8 @@ plt.tight_layout()
                                 title="Кількість користувачів за віком та грою",
                                 labels={"age": "Вік", "Кількість користувачів": "Кількість користувачів"})
         st.plotly_chart(fig_line_age_activity)
+
+        
 
         # Побудова стовпчикового графіка за кількістю користувачів за мовою
         fig_bar = px.bar(filtered_df.groupby("language").size().reset_index(name="Кількість користувачів"),
