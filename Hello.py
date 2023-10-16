@@ -11,20 +11,49 @@ st.set_page_config(
     # theme="dark"
 )
 
+
 st.markdown(
     """
-    <style>
-        body {
-            color: #f8f9fa;
-            background-color: #343a40;
-        }
-        .css-1v3fvcr {
-            background-color: #343a40;
-        }
-    </style>
+    <script>
+        // Визначення обробника подій для зміни URL
+        window.onpopstate = function(event) {
+            // Прокрутка сторінки вгору
+            window.scrollTo(0, 0);
+        };
+    </script>
     """,
     unsafe_allow_html=True,
 )
+# theme = st.sidebar.selectbox("Оберіть тему", ["Світла", "Темна"])
+
+# # Збереження вибору теми в локальне сховище
+# st.session_state.theme = theme
+
+# # Встановлення теми
+# if st.session_state.theme == "Темна":
+#     st.markdown(
+#         """
+#         <style>
+#             body {
+#                 color: #fff;
+#                 background-color: #333;
+#             }
+#         </style>
+#         """,
+#         unsafe_allow_html=True,
+#     )
+# else:
+#     st.markdown(
+#         """
+#         <style>
+#             body {
+#                 color: #000;
+#                 background-color: #fff;
+#             }
+#         </style>
+#         """,
+#         unsafe_allow_html=True,
+#     )
 
 st.markdown(
     """
@@ -649,7 +678,9 @@ group by session_table.page_path
 
 
 def python(selected_project):
-
+    st.markdown("""
+    У мене є багато проектів на Python. Щоб переглянути їх, будь ласка, звертайтесь за контактами, які розміщені в розділі **About me**.
+    """)
     if selected_project == 'Analysis of YouTube':
         st.subheader(f"Python: Analysis of YouTube")
         st.write("")
@@ -792,7 +823,7 @@ plt.title(f'{x_column} vs {y_column}')
 
         st.write("")
         st.write("")
-        st.subheader(f"6. На цій карті ми можемо побачити найбільші каналі по країнам")
+        st.subheader(f"6. На цій карті ми можемо побачити найбільші канали по країнам")
 
         data1 = dfp1[dfp1['subscribers'] > 1e7]
         data1 = data1.dropna(subset=['Latitude', 'Longitude'])
@@ -1603,16 +1634,124 @@ def visualization(selected_project):
         st.write("")
         st.image("images/tableau5.jpg", output_format="auto")
         st.write("")
-        
-
-
-
-
+    
 
     elif selected_project == 'Power BI':
         st.subheader(f"Power BI")
-        st.write("In progress...")
+        st.write("")
+        st.write("У цьому проекті я використав такий датасет:")
+        
+        dfpw = pd.read_csv("csv_files/supermarket_sales - Sheet1.csv")
+        st.dataframe(dfpw)
 
+        st.write("")
+        st.subheader(f"Завдання 1. Калькуляція даних")
+        st.write("")
+        st.write("1. Обчислення виручки:")
+        
+        sentences_p1 = [
+        "Обчислив загальну виручку за кожен місяць продажу.",
+        "Створив відповідний лінійний графік, щоб візуалізувати ці дані."
+        ]
+
+        form_text_p1 = "<div>" + "</div><div>".join([f"• {sentence}" for sentence in sentences_p1]) + "</div>"
+        st.markdown(form_text_p1, unsafe_allow_html=True)
+        
+        st.write("")
+        st.write("2. Обчислення середньої вартості продуктів:")
+        
+        sentences_p2 = [
+        "Обчислив середню вартість продуктів для кожної категорії.",
+        "Створив стовбчикову діаграму для візуалізації цих середніх вартостей."
+        ]
+
+        form_text_p2 = "<div>" + "</div><div>".join([f"• {sentence}" for sentence in sentences_p2]) + "</div>"
+        st.markdown(form_text_p2, unsafe_allow_html=True)
+        st.write("")
+
+
+        st.subheader("Завдання 2. Створення візуалізацій")
+        st.write("")
+        st.write("1. Графік часового ряду продажів:")
+        
+        sentences_p3 = [
+        "Побудував графік часового ряду, де ось X - дата продажу, а ось Y - обсяг продажів.",
+        "Додав фільтри за роками та місяцями для зручності аналізу."
+        ]
+
+        form_text_p3 = "<div>" + "</div><div>".join([f"• {sentence}" for sentence in sentences_p3]) + "</div>"
+        st.markdown(form_text_p3, unsafe_allow_html=True)
+        st.write("")
+
+        st.write("2. Графік розподілу продуктів за категоріями:")
+        
+        sentences_p4 = [
+        "Створив стовпчикову діаграму, яка показує кількість проданих одиниць кожної категорії продуктів.",
+        "Додав ще декілька фільтрів для зручності"
+        ]
+
+        form_text_p4 = "<div>" + "</div><div>".join([f"• {sentence}" for sentence in sentences_p4]) + "</div>"
+        st.markdown(form_text_p4, unsafe_allow_html=True)
+        st.write("")
+
+        st.write("3. Продажі по типах платежів:")
+        
+        sentences_p5 = [
+        "Побудував кругову діаграму для відображення розподілу продаж по типах оплат (готівка, карта, тощо)",
+        "Додав значення на графіку для більшої інформативності."
+        ]
+
+        form_text_p5 = "<div>" + "</div><div>".join([f"• {sentence}" for sentence in sentences_p5]) + "</div>"
+        st.markdown(form_text_p5, unsafe_allow_html=True)
+        st.write("")
+
+        st.subheader("Завдання 3. Робота із зовнішнім API")
+        st.write("")
+        st.write("1. Підключився до АПІ національного банку України, що дало можливiсть отримати курс долара на останню дату.")
+
+        st.write("2. Створив нову табличку “Currency” через “Enter data” із двома рядками UAH та USD. На дашборді добав фільтр Currency у форматі single selection.")
+        st.write("3. Зробив міри, які будуть змінюватися в залежності від вибору валюти:")
+
+        code = """
+Total by gross income = 
+IF(
+    MAX('Currency'[Column1]) = "UAH",
+    SUM('supermarket_sales - Sheet1'[gross income]) * SUM('exchange?valcode=USD&json'[rate]),
+    SUM('supermarket_sales - Sheet1'[gross income])
+)
+"""
+
+        # Відображення коду
+        st.code(code, language="python")
+
+        code = """
+Total by currency = 
+IF(
+    MAX('Currency'[Column1]) = "UAH",
+    SUM('supermarket_sales - Sheet1'[Total]) * SUM('exchange?valcode=USD&json'[rate]),
+    SUM('supermarket_sales - Sheet1'[Total])
+)
+"""
+
+        # Відображення коду
+        st.code(code, language="python")
+
+        code = """
+Average Price by category = 
+IF(
+    MAX('Currency'[Column1]) = "UAH",
+    AVERAGE('supermarket_sales - Sheet1'[Unit price]) * SUM('exchange?valcode=USD&json'[rate]),
+    AVERAGE('supermarket_sales - Sheet1'[Unit price])
+)
+"""
+
+        # Відображення коду
+        st.code(code, language="python")
+
+        st.write("")
+        st.image("images/Power BI.jpg", output_format="auto")
+        st.write("")
+        
 
     elif selected_project == 'Looker studio':
         st.markdown("## [Looker studio](https://lookerstudio.google.com/reporting/cb4dd091-e015-499f-8cb3-03bed143b0ea)")
@@ -2048,3 +2187,5 @@ elif selected_section == 'Google Sheets':
     selected_project = st.sidebar.selectbox("Оберіть проект:", ['Проект 1', 'Проект 2'])
     if selected_project:
         google_sheets(selected_project)
+
+
